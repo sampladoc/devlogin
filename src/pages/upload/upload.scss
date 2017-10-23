@@ -60,6 +60,15 @@ page-upload {
 
     ion-textarea{
         height:200px !important;
+        color: color($colors, primary);
+    }
+
+    ion-input{
+        color: color($colors, primary);
+    }
+
+    ionc-label{
+        color: color($colors, light3);
     }
     .right-align{
         text-align:right !important;
@@ -79,6 +88,10 @@ page-upload {
     }
     .toolbar-background {
         background: #604984;
+    }
+
+    textarea {
+        resize: both;
     }
 
     .btn{
@@ -150,7 +163,7 @@ page-upload {
         margin:5px 2px 5px 2px !important;
         color:#212121;
     }
-
+    
     .FM{
         float:left;
         margin-top:10px;
@@ -158,6 +171,21 @@ page-upload {
     .close_btn{
         margin-top:2px !important;
         padding-top:0px !important;
+    }
+    .project_text{
+        color: color($colors, light2);
+        padding-top:0px; margin-top:0px; font-weight:100;
+    }
+    .project_title{
+        color: color($colors, light2);
+        font-size: 20px;
+    }
+    .project_role{
+        color: color($colors, primary);
+    }
+    .project_des{
+        color: color($colors, light2);
+        font-size: 12px;
     }
     
     

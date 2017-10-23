@@ -34,8 +34,16 @@ export class UploadPage {
   resume:string
   video:string
   certificate:string
-
+  frameworks:string
+  projectBtnObj = {
+    btn:"Add Project",
+    edit:false,
+    editIndex:0,
+    color:"secondary1"
+  }
   
+
+  //Developer expertise object used to dynamically create input fields
   devEx = [
     {
       "title":"iOS",
@@ -89,13 +97,15 @@ export class UploadPage {
   ]
   Frameworks = []
   frameworkVariables = []
+  //Project object used to show layout of projects saved
   Projects = [
     {
-      title:"test",
-      role:"test1",
-      expertise:["a","b","c"],
-      tools:[1,2,3],
-      description:"this is a test"
+      title:"ZipDev Test Project",
+      role:"Full Stack Developer",
+      expertise:["Front end Develpmentment","Back end Development"],
+      tools:["JavaScript","Ionic 3.0","Angular 4.0","Sass"],
+      description:"This was a test project to assess my development skills. It' took me just under 30 hours spread across 3 days.",
+      visible:true
     }
   ]
   screens = []
@@ -110,7 +120,6 @@ export class UploadPage {
   }
 
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
-      console.log(navParams);
       this.basicInfo = navParams.data
       console.log(this.basicInfo)
   }
@@ -120,15 +129,18 @@ export class UploadPage {
     console.log('ionViewDidLoad UploadPage');
   }
 
-  presentAlert(m) {
+  presentAlert(m,t) {
     const alert = this.alertCtrl.create({
-      title: 'Input Error',
+      title: t,
       subTitle: m,
-      buttons: ['Dismiss']
+      buttons: ['OK']
     });
     alert.present();
   }
 
+  //Function to capture file uploads. 
+  //Sending of the files can/will be done at a later date as a backend is needed to test that it works
+  //** Note 20KB is too small for some file sizes and should be modified depending on the file type */
   upload(t){
     let fileBrowser;
     let types = {
@@ -154,7 +166,7 @@ export class UploadPage {
     
     let name = fileBrowser.files[0].name;
     var spType = name.split(".")
-    console.log(fileBrowser.files[0].size)
+    
     if(fileBrowser.files[0].size > 20000){
       alert("File size exceeded!")
     }else{
@@ -234,26 +246,101 @@ export class UploadPage {
 
   addFramework(event:any){
     let e = {
-        "experience":"",
-        "proficiency":"",
-        "checked":false
+        "experience":"7",
+        "proficiency":"50",
+        "checked":true
     }
-
+    this.frameworks = ""
     this.frameworkVariables.push(e)
     this.Frameworks.push(event)
   }
 
   addProject(){
-    let a = this.areas.split(",")
-    let t = this.tools.split(",")
-    let p = {
-      title:this.pname,
-      role:this.role,
-      expertise:a,
-      tools:t,
-      description:this.describe
+    let ar = ""
+    let tl = ""
+    let pn = ""
+    let ds = ""
+    let rl = ""
+    
+    let safe = true
+    let mes = ""
+    if(!this.pname){
+       pn = "Please put <b>Project Name</b>"
+       safe = false
+    } 
+
+    if(!this.role){
+       rl = "<br>Please put you <b>Role</b>"
+       safe = false
+    }   
+
+    if(!this.areas){
+      ar = "<br>Please put areas of <b>Expertise</b>"
+      safe = false
     }
-    this.Projects.push(p);
+
+    if(!this.tools){
+      tl = "<br>Please put <b>Tools</b> used"
+      safe = false
+    }
+
+    if(!this.describe){
+      ds = "<br>Please put <b>Description</b>"
+      safe = false
+    }
+
+    
+
+    
+    if(safe){
+        let a = this.areas.split(",")
+        let t = this.tools.split(",")
+        let p = {
+          title:this.pname,
+          role:this.role,
+          expertise:a,
+          tools:t,
+          description:this.describe,
+          visible:true
+        }
+        if(this.projectBtnObj.edit){
+          this.Projects[this.projectBtnObj.editIndex].title = this.pname,
+          this.Projects[this.projectBtnObj.editIndex].role = this.role,
+          this.Projects[this.projectBtnObj.editIndex].expertise = a,
+          this.Projects[this.projectBtnObj.editIndex].tools = t,
+          this.Projects[this.projectBtnObj.editIndex].description = this.describe,
+          this.Projects[this.projectBtnObj.editIndex].visible = true
+          this.projectBtnObj.edit = false
+        }else{
+          this.Projects.push(p);
+        }
+    }else{
+      mes = pn+""+rl+""+ar+""+tl+""+ds
+      this.presentAlert(mes,"Input Error")
+    }
+    
+  }
+
+  manipulateProject(pr:string,i:number){
+    if(pr == "edit"){
+      this.projectBtnObj.editIndex = i
+      this.projectBtnObj.edit = true
+      let pArray = this.Projects[i]
+      console.log(pArray)
+       for(let x = 0; x < 6; x++){
+          this.pname = pArray.title
+          this.role = pArray.role
+          this.tools = pArray.tools.toString()
+          this.areas = pArray.expertise.toString()
+          this.describe = pArray.description
+       }
+    }
+    if(pr == "hide"){
+      this.Projects[i].visible = false
+    }
+    if(pr == "delete"){
+      this.Projects.splice(i, 1);
+    }
   }
 
   save(){
@@ -287,7 +374,7 @@ export class UploadPage {
     
 
     
-    if(safe){
+    if(!safe){
       this.devInfo = {
           "picture":this.photo,
           "certificate":this.certificate,
@@ -301,10 +388,11 @@ export class UploadPage {
       }
       const newInfo = Object.assign({}, this.basicInfo, this.devInfo);
       console.log(newInfo)
-      //this.navCtrl.push(DeveloperPage,this.basicInfo);
+      mes = "We have recieved your application. Check your email for instructions to schedule a call with our recuritors."
+      this.presentAlert(mes,"Congratulations")
     }else{
-      mes = pp+""+cv+""+ct+""+cv+""+vd
-      this.presentAlert(mes)
+      mes = pp+""+cv+""+ct+""+vd
+      this.presentAlert(mes,"Input Error")
     }
     
   }

@@ -26,7 +26,7 @@ export class HomePage {
     const alert = this.alertCtrl.create({
       title: 'Input Error',
       subTitle: m,
-      buttons: ['Dismiss']
+      buttons: ['OK']
     });
     alert.present();
   }
@@ -34,9 +34,12 @@ export class HomePage {
   checkEmail(e){
     console.log(e)
   }
-  saveG(){
+  saveg(){
     this.navCtrl.push(DeveloperPage);
   }
+
+  //Validates input fields **Note checks for valid email by check for @ but not .com, will be added later.
+  //Checks if phone number is really a number.
   save(){
     let fn = ""
     let ln = ""
@@ -102,6 +105,7 @@ export class HomePage {
           "password":this.password,
           "number":this.number
       }
+      //Navigates to next page taking the basic info with it.
       this.navCtrl.push(DeveloperPage,this.basicInfo);
     }else{
       mes = fn+""+ln+""+em+""+nm+""+ps+""+cps+""+tnm+""+tem

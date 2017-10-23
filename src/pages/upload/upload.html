@@ -224,33 +224,54 @@
     <ion-row>
       <ion-col></ion-col>    
       <ion-col col-6>
-        <ion-card *ngFor="let project of Projects; let i = index">
+        <ng-container *ngFor="let project of Projects; let i = index">
+        <ion-card  *ngIf="project.visible">
             
           <ion-item style="background:transparent;">
-            <h2 color="light">{{project.title}}</h2>
-            <p color="light" >{{project.role}}</p>
+            <p class="project_title">{{project.title}}</p>
+            <p class="project_role">{{project.role}}</p>
           </ion-item>        
-          <ion-row>
-            <ion-col *ngFor="let expert of project.expertise; let j = index">
-              <button ion-button icon-left clear small>
-                <ion-icon name="checkmark"></ion-icon>
-                <div>{{expert}}</div>
-              </button>
+          <ion-row style="margin-bottom:0px; padding-top:0px;">
+            <ion-col *ngFor="let expert of project.expertise; let j = index" style="margin:0px; padding:0px;">
+              <ion-item style="background:transparent;">
+                <ion-label color="light3" style="font-size:12px;"><ion-icon name="code" item-left color="light2"></ion-icon>{{expert}}</ion-label>
+              </ion-item>
             </ion-col>
           </ion-row>
-          <ion-card-content color="primary">
-            <p style="color:#fff;">{{project.description}}</p>
+          <ion-card-content color="primary" style="margin-top:0px; padding-top:0px;">
+            <p class="project_des">{{project.description}}</p>
           </ion-card-content>
           <ion-row>
-            <ion-col *ngFor="let tool of project.tools; let j = index">
-              <button ion-button icon-left clear small>
-                <ion-icon name="checkmark"></ion-icon>
-                <div>{{tool}}</div>
-              </button>
+            <ion-col *ngFor="let tool of project.tools; let j = index" style="margin:0px; padding:0px;">
+                <ion-item style="background:transparent;">
+                  <ion-label color="light3" style="font-size:10px;"><ion-icon name="checkmark" item-left color="light2"></ion-icon>{{tool}}</ion-label>
+                </ion-item>
             </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+                <button ion-button icon-left clear small (click)="manipulateProject('edit',i)">
+                    <ion-icon name="create" ></ion-icon>
+                    <div>Edit</div>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left clear small (click)="manipulateProject('hide',i)">
+                    <ion-icon name="eye-off" ></ion-icon>
+                    <div>Hide</div>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left clear small (click)="manipulateProject('delete',i)">
+                    <ion-icon name="trash" ></ion-icon>
+                    <div>Delete</div>
+                </button>
+            </ion-col>
+            <ion-col></ion-col>
           </ion-row>
       
       </ion-card>
+      </ng-container>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>
@@ -300,15 +321,8 @@
     <ion-row>
       <ion-col></ion-col>    
       <ion-col col-6>
-        <p style="color:#fff;">Describe Project</p>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col></ion-col>    
-      <ion-col col-6>
         <ion-item class="ip">        
-          <ion-textarea [(ngModel)]="describe" name="describe" clearInput type="text" placeholder="Description"></ion-textarea>
+          <ion-textarea [(ngModel)]="describe" name="describe" clearInput type="text" placeholder="Description" item-height="50"></ion-textarea>
         </ion-item>
       </ion-col>
       <ion-col></ion-col>
@@ -342,7 +356,7 @@
     <ion-row>
       <ion-col></ion-col>    
       <ion-col col-6> 
-        <button ion-button color="secondary" round (click)=addProject()>Add Project</button>
+        <button ion-button color="{{projectBtnObj.color}}" round (click)=addProject()>{{projectBtnObj.btn}}</button>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>

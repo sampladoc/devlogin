@@ -30,7 +30,7 @@ export class DeveloperPage {
 
   }
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams) {
-      console.log(navParams);
+      //Gets info from previous page
       this.basicInfo = navParams.data
       console.log(this.basicInfo)
   }
@@ -43,7 +43,7 @@ export class DeveloperPage {
     const alert = this.alertCtrl.create({
       title: 'Input Error',
       subTitle: m,
-      buttons: ['Dismiss']
+      buttons: ['OK']
     });
     alert.present();
   }
@@ -55,6 +55,7 @@ export class DeveloperPage {
   saveg(){
     this.navCtrl.push(UploadPage);
   }
+  //Validates most input fields. Some fields that were deemed optional were left out. Can be changed later.
   save(){
     let cn = ""
     let ct = ""
@@ -115,8 +116,8 @@ export class DeveloperPage {
           "portfolio":this.portfolio,
           
       }
+      //Adds info gathered on this page to the info from previous page and sends it to the next page
       const newInfo = Object.assign({}, this.basicInfo, this.moreInfo);
-      console.log(newInfo)
       this.navCtrl.push(UploadPage,newInfo);
     }else{
       mes = cn+""+ct+""+et+""+ms+""+nv+""+tf
