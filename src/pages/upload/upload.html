@@ -1,0 +1,361 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title style="color:rgb(255, 255, 255);">
+        File Uploads
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding style="background-color: #231f20;">
+    <form>
+    <ion-grid>
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col col-6>
+            <p style="color:#fff;">Upload Files</p>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col style="margin-bottom:20px;" col-6>
+          <ion-row>
+              <div class="empty_avatar"></div> 
+          </ion-row>
+          <ion-row>
+            <ion-col> 
+              <label class="btn2">
+                  <input [(ngModel)]="file" name="file" #fileInput id="fileInput" type="file" style="display:none;" (change)=upload(0)>
+                  Upload or change photo
+              </label>
+              <p class="pf">jpeg or png (20 KB max)</p>
+            </ion-col>
+            <ion-col>
+                <p class="pfl">{{img}}</p>
+                <button ion-button color="danger" clear icon-only style="float:right;">
+                    <ion-icon name="close" icon-right></ion-icon>
+                </button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col style="margin-bottom:20px;" col-6>
+          <ion-row>
+              <p class="ph">Please upload your CV</p>
+          </ion-row>
+          <ion-row>
+            <ion-col> 
+              <label class="btn2">
+                  <input [(ngModel)]="pfile" name="pfile" #pfileInput id="pfileInput" type="file" style="display:none;" (change)=upload(1)>
+                  Upload file
+              </label>
+              <p class="pf">doc or pdf (20 KB max)</p>
+            </ion-col>
+            <ion-col>
+                <p class="pfl">{{doc0}}</p>
+                <button ion-button color="danger" clear icon-only style="float:right;">
+                    <ion-icon name="close" icon-right></ion-icon>
+                </button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col style="margin-bottom:20px;" col-6>
+          <ion-row>
+              <p class="ph">Please upload certification if you have one.</p>
+          </ion-row>
+          <ion-row>
+            <ion-col> 
+              <label class="btn2">
+                  <input [(ngModel)]="cfile" name="cfile" #cfileInput id="cfileInput" type="file" style="display:none;" (change)=upload(2)>
+                  Upload file
+              </label>
+              <p class="pf">doc or pdf (20 KB max)</p>
+            </ion-col>
+            <ion-col>
+                <p class="pfl">{{doc1}}</p>
+                <button ion-button color="danger" clear icon-only style="float:right;">
+                    <ion-icon name="close" icon-right></ion-icon>
+                </button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col style="margin-bottom:20px;" col-6>
+          <ion-row>
+              <p class="ps">Bonus</p>
+              <p class="ph" style="margin-top:0px;" >Introduce yourself in a short video</p>
+          </ion-row>
+          <ion-row>
+            <ion-col> 
+              <label class="btn2">
+                  <input [(ngModel)]="vfile" name="vfile" #vfileInput id="vfileInput" type="file" style="display:none;" (change)=upload(3)>
+                  Upload file
+              </label>
+              <p class="pf">mp4 (2 MB max)</p>
+            </ion-col>
+            <ion-col>
+                <p class="pfl">{{vid}}</p>
+                <button ion-button color="danger" clear icon-only style="float:right;">
+                    <ion-icon name="close" icon-right></ion-icon>
+                </button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+  
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col col-6>
+          <p style="color:#fff;">Expertise</p>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let exp of devEx; let i = index">
+          <ion-col></ion-col>    
+          <ion-col col-6>
+            <ion-item class="ip2">     
+              <ion-toggle [(ngModel)]="exp.checked" name="ios" checked="false" (ionChange)=check()></ion-toggle>   
+              <ion-label color="light"> <ion-icon name="{{exp.icon}}" icon-left></ion-icon> {{exp.title}}</ion-label>
+            </ion-item>
+            <div *ngIf="exp.checked" style="margin-top:10px;">
+                <ion-row class="range_row">
+                    <ion-col class="range_col">Experience</ion-col>    
+                    <ion-col class="right-align">{{exp.experience}} Years</ion-col>
+                </ion-row>
+                <ion-range min="1" max="15" pin="true" [(ngModel)]="exp.experience" name="f" color="secondary">
+                </ion-range>
+                
+                <ion-row>
+                    <ion-col class="range_col">Proficiency</ion-col>    
+                    <ion-col class="right-align">{{exp.proficiency}}%</ion-col>
+                </ion-row>
+                <ion-range min="0" max="100" pin="true" [(ngModel)]="exp.proficiency" name="ff" style="margin-top:5px;" color="secondary">
+                </ion-range>
+            </div> 
+          </ion-col>
+          <ion-col></ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col col-6>
+          <p style="color:#fff;">Skills</p>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col col-6>
+          <p style="color:#fff;">Select the language or frameworks you have worked with</p> 
+          <ion-item class="ip">        
+            <ion-label> <ion-icon name="logo-chatbubbles"></ion-icon></ion-label>
+            <ion-input [(ngModel)]="frameworks" name="frameworks" #fm clearInput type="text" (keydown.enter)="addFramework(fm.value)"></ion-input>
+          </ion-item>
+          <div class="FM" #fmVariable  *ngFor="let frm of Frameworks; let i = index">
+            <ion-badge color="secondary" style="margin-right:3px;">
+                <p class="pb">{{frm}}</p>
+                <button ion-button color="danger" clear icon-only style="float:right;" (click)=removeFramework(frm) class="close_btn">
+                    <ion-icon name="close" icon-right style="font-size:10px;" class="close_btn"></ion-icon>
+                </button>
+            </ion-badge>
+          </div>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col></ion-col>    
+        <ion-col col-6>
+          <p style="color:#fff;">Proficiency</p>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let frmp of Frameworks; let i = index">
+        <ion-col></ion-col>    
+        <ion-col col-6>
+          <ion-item class="ip2">     
+            <ion-toggle [(ngModel)]="frameworkVariables[i].checked" name="frame" checked="false" (ionChange)=check()></ion-toggle>   
+            <ion-label color="light"> <ion-icon name="checkbox-outline" icon-left></ion-icon> {{frmp}}</ion-label>
+          </ion-item> 
+          <div *ngIf="frameworkVariables[i].checked">
+              <ion-row class="range_row">
+                  <ion-col class="range_col">Experience</ion-col>    
+                  <ion-col class="right-align">{{frameworkVariables[i].experience}} Years</ion-col>
+              </ion-row>
+              <ion-range min="1" max="15" pin="true" [(ngModel)]="frameworkVariables[i].experience" name="f" color="secondary">
+              </ion-range>
+              
+              <ion-row>
+                  <ion-col class="range_col">Proficiency</ion-col>    
+                  <ion-col class="right-align">{{frameworkVariables[i].proficiency}}%</ion-col>
+              </ion-row>
+              <ion-range min="0" max="100" pin="true" [(ngModel)]="frameworkVariables[i].proficiency" name="ff" style="margin-top:5px;" color="secondary">
+              </ion-range>
+          </div>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+      
+      
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <p style="color:#fff;">Projects</p>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-card *ngFor="let project of Projects; let i = index">
+            
+          <ion-item style="background:transparent;">
+            <h2 color="light">{{project.title}}</h2>
+            <p color="light" >{{project.role}}</p>
+          </ion-item>        
+          <ion-row>
+            <ion-col *ngFor="let expert of project.expertise; let j = index">
+              <button ion-button icon-left clear small>
+                <ion-icon name="checkmark"></ion-icon>
+                <div>{{expert}}</div>
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-card-content color="primary">
+            <p style="color:#fff;">{{project.description}}</p>
+          </ion-card-content>
+          <ion-row>
+            <ion-col *ngFor="let tool of project.tools; let j = index">
+              <button ion-button icon-left clear small>
+                <ion-icon name="checkmark"></ion-icon>
+                <div>{{tool}}</div>
+              </button>
+            </ion-col>
+          </ion-row>
+      
+      </ion-card>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+
+   
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-item class="ip">        
+          <ion-label> <ion-icon name="document"></ion-icon></ion-label>
+          <ion-input [(ngModel)]="pname" name="pname" clearInput type="text" placeholder="Project Name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-item class="ip">        
+          <ion-label> <ion-icon name="briefcase"></ion-icon></ion-label>
+          <ion-input [(ngModel)]="role" name="role" clearInput type="text" placeholder="Your Role"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-item class="ip">       
+          <ion-label> <ion-icon name="checkbox-outline"></ion-icon> </ion-label>
+          <ion-input [(ngModel)]="areas" name="areas" clearInput type="text" placeholder="Areas of Expertise (separate with commas)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-item class="ip">        
+          <ion-label> <ion-icon name="code"></ion-icon></ion-label>
+          <ion-input [(ngModel)]="tools" name="tools" clearInput type="text" placeholder="Tools used (separate with commas)"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <p style="color:#fff;">Describe Project</p>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6>
+        <ion-item class="ip">        
+          <ion-textarea [(ngModel)]="describe" name="describe" clearInput type="text" placeholder="Description"></ion-textarea>
+        </ion-item>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col style="margin-bottom:0px;" col-6>
+        
+            <label class="btn2">
+                <input [(ngModel)]="pfile2" name="pfile2" #pfileInput2 id="pfileInput2" type="file" style="display:none;" (change)=screenshots()>
+                Upload Screenshots
+            </label>
+            <p class="pf">{{image_count}} images (2 MB max)</p>
+          
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    <ion-row style="margin-top:0px">
+      <ion-col></ion-col>    
+      <ion-col style="margin-bottom:20px;" col-6> 
+        <ion-row *ngFor="let screen of screens; let j = index">     
+              <p class="pfl">{{screen}}</p>
+              <button ion-button color="danger" clear icon-only style="float:right;">
+                  <ion-icon name="close" icon-right></ion-icon>
+              </button>
+        </ion-row>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6> 
+        <button ion-button color="secondary" round (click)=addProject()>Add Project</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col></ion-col>    
+      <ion-col col-6> 
+        <button ion-button color="secondary" round full (click)="save()">Confirm</button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+      
+    </ion-grid>
+    </form>
+    
+  </ion-content>
