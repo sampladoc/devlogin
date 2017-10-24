@@ -327,13 +327,12 @@ export class UploadPage {
       this.projectBtnObj.edit = true
       let pArray = this.Projects[i]
       console.log(pArray)
-       for(let x = 0; x < 6; x++){
-          this.pname = pArray.title
-          this.role = pArray.role
-          this.tools = pArray.tools.toString()
-          this.areas = pArray.expertise.toString()
-          this.describe = pArray.description
-       }
+      this.pname = pArray.title
+      this.role = pArray.role
+      this.tools = pArray.tools.toString()
+      this.areas = pArray.expertise.toString()
+      this.describe = pArray.description
+       
     }
     if(pr == "hide"){
       this.Projects[i].visible = false
